@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070b24">
+<title>সরি সেতু আপু</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:#070b24;-webkit-text-size-adjust:100%}
+  body{font-family:'Hind Siliguri','Noto Sans Bengali','Segoe UI',sans-serif;color:#f3eefc;background:#070b24;overflow-x:hidden}
+  .bg{position:fixed;inset:0;z-index:0;background:linear-gradient(180deg,#070b24 0%,#141a45 45%,#2a2358 75%,#1c3a3a 100%)}
+
+  /* night sky */
+  .sky{position:fixed;inset:0;z-index:1;pointer-events:none}
+  .star{position:absolute;background:#fff;border-radius:50%;animation:tw 3s infinite ease-in-out}
+  @keyframes tw{0%,100%{opacity:.2}50%{opacity:1}}
+  .moon{position:absolute;top:5%;right:8%;width:66px;height:66px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#fffbe6,#f5e8a8 70%,#e8d783);
+    box-shadow:0 0 40px 12px rgba(255,244,180,.35)}
+  .moon::after{content:"";position:absolute;top:16px;left:36px;width:12px;height:12px;border-radius:50%;background:rgba(0,0,0,.07);box-shadow:-18px 20px 0 -2px rgba(0,0,0,.06)}
+
+  /* flower garden */
+  .garden{position:fixed;left:0;right:0;bottom:0;height:30%;min-height:170px;z-index:2;pointer-events:none;overflow:visible;
+    background:linear-gradient(180deg,transparent,#0f2a22 75%)}
+  .flower{position:absolute;bottom:20px;transform-origin:bottom center;animation:sway 4s infinite ease-in-out}
+  @keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  .stem{width:3px;background:linear-gradient(#3fa66b,#1d6b44);margin:0 auto;border-radius:2px}
+  .head{position:relative;width:34px;height:34px;margin:0 auto -6px}
+  .head i{position:absolute;left:50%;top:50%;width:14px;height:18px;margin:-18px 0 0 -7px;border-radius:50% 50% 50% 50%/70% 70% 30% 30%;transform-origin:50% 100%}
+  .head b{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#ffd95e;z-index:2}
+  .leaf{position:absolute;width:16px;height:8px;background:#2f8f5b;border-radius:0 100% 0 100%}
+  .grass{position:absolute;bottom:0;left:0;right:0;height:26px;background:#0b2119}
+
+  .please{position:absolute;left:50%;top:-34px;transform:translateX(-50%) scale(0);transform-origin:50% 100%;opacity:0;
+    background:rgba(255,255,255,.93);color:#7a2250;font:600 .78rem 'Hind Siliguri',sans-serif;padding:2px 9px;border-radius:12px;white-space:nowrap;
+    transition:opacity .5s,transform .5s cubic-bezier(.3,1.6,.5,1)}
+  .please::after{content:"";position:absolute;left:50%;bottom:-5px;margin-left:-5px;border:5px solid transparent;border-top-color:rgba(255,255,255,.93);border-bottom:0}
+  body.pleading .please{opacity:1;transform:translateX(-50%) scale(1)}
+
+  /* pages */
+  .page{position:relative;z-index:5;min-height:100vh;min-height:100dvh;display:none;flex-direction:column;align-items:center;justify-content:center;
+    padding:28px 22px calc(40px + env(safe-area-inset-bottom));padding-top:calc(28px + env(safe-area-inset-top));text-align:center}
+  .page.active{display:flex;animation:fade 1s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+
+  /* gate + cat */
+  .stage{position:relative;width:min(290px,100%);aspect-ratio:290/262;margin-bottom:6px}
+  .gate{position:absolute;inset:0;width:100%;height:100%}
+  .stage.small{width:min(230px,100%)}
+  .cat-wrap{position:absolute;left:14%;width:72%;bottom:0}
+  .cat{width:100%;height:auto;display:block;overflow:visible}
+  .tail{transform-origin:150px 190px;animation:tailw 2.4s infinite ease-in-out}
+  @keyframes tailw{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(10deg)}}
+  .eye-happy,.eye-sad,.mouth-happy,.mouth-sad,.arm-down{transition:opacity .4s}
+  .eye-sad,.mouth-sad,.tear,.brow-sad,.paws{opacity:0}
+  .paws{transition:opacity .5s;animation:pawr 1s infinite ease-in-out}
+  @keyframes pawr{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .head-grp{transition:transform .6s;transform-origin:100px 105px}
+  .sad .eye-happy,.sad .mouth-happy,.sad .arm-down{opacity:0}
+  .sad .eye-sad,.sad .mouth-sad,.sad .brow-sad,.sad .paws{opacity:1}
+  .sad .tear{animation:tear 1.6s infinite}
+  .sad .head-grp{transform:translateY(5px) rotate(-2deg)}
+  @keyframes tear{0%{transform:translateY(0);opacity:.9}100%{transform:translateY(22px);opacity:0}}
+
+  .bubble{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border-radius:20px;padding:18px;width:100%;max-width:420px;font-size:1.08rem;line-height:1.8;min-height:9.4em;margin-top:8px;
+    display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .7s}
+  .sorry{font-family:'Hind Siliguri',sans-serif;font-weight:600;font-size:1.6rem;color:#ffd1e3;margin-top:14px;opacity:0;transition:opacity 1s;text-shadow:0 0 14px rgba(255,150,200,.5)}
+  .sorry.show{opacity:1}
+  .btn{margin-top:18px;padding:13px 30px;font:600 1.05rem 'Hind Siliguri',sans-serif;color:#2b1a3d;background:linear-gradient(135deg,#ffd1e3,#ffc2a8);
+    border:0;border-radius:30px;box-shadow:0 6px 24px rgba(255,170,200,.35);opacity:0;pointer-events:none;transition:opacity .8s;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .btn.show{opacity:1;pointer-events:auto}
+  .btn:active{transform:scale(.97)}
+  .btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+  /* letter */
+  .letter{background:rgba(10,12,40,.66);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-radius:22px;max-width:520px;width:100%;padding:26px 22px;text-align:left;font-size:1.06rem;line-height:1.95;margin:10px 0}
+  .letter p{margin-bottom:1.05em;opacity:0;transform:translateY(8px);transition:opacity .9s,transform .9s}
+  .letter p.in{opacity:1;transform:none}
+  .letter .to{font-size:1.25rem;font-weight:600;color:#ffd1e3}
+  .letter .sign{text-align:right;margin:1.4em 0 0;color:#cfc4f3}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}.letter p{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="sky" id="sky"><div class="moon"></div></div>
+<div class="garden" id="garden"><div class="grass"></div></div>
+
+<!-- PAGE 1 -->
+<section class="page active" id="page1">
+  <div class="stage">
+    <!-- gate -->
+    <svg class="gate" viewBox="0 0 290 262" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs><radialGradient id="glow"><stop offset="0" stop-color="#ffe9a0" stop-opacity=".9"/><stop offset="1" stop-color="#ffe9a0" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="22" cy="38" r="30" fill="url(#glow)"/><circle cx="268" cy="38" r="30" fill="url(#glow)"/>
+      <rect x="8" y="58" width="30" height="204" rx="3" fill="#2a2f5c"/><rect x="252" y="58" width="30" height="204" rx="3" fill="#2a2f5c"/>
+      <rect x="4" y="52" width="38" height="10" rx="3" fill="#3a4080"/><rect x="248" y="52" width="38" height="10" rx="3" fill="#3a4080"/>
+      <circle cx="23" cy="42" r="8" fill="#ffe9a0"/><circle cx="267" cy="42" r="8" fill="#ffe9a0"/>
+      <path d="M38 92 Q145 36 252 92" fill="none" stroke="#4a5199" stroke-width="5" stroke-linecap="round"/>
+      <g stroke="#3f4688" stroke-width="4" stroke-linecap="round">
+        <path d="M54 82V262"/><path d="M74 72V262"/><path d="M94 66V262"/><path d="M114 62V262"/><path d="M134 60V262"/>
+        <path d="M156 60V262"/><path d="M176 62V262"/><path d="M196 66V262"/><path d="M216 72V262"/><path d="M236 82V262"/>
+      </g>
+    </svg>
+    <div class="cat-wrap" id="catWrap">
+      <svg class="cat" viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="বিড়াল">
+        <g class="tail"><path d="M150 195 C195 190 200 140 172 128" fill="none" stroke="#f0a24b" stroke-width="16" stroke-linecap="round"/></g>
+        <ellipse cx="100" cy="170" rx="58" ry="55" fill="#f0a24b"/>
+        <ellipse cx="100" cy="182" rx="32" ry="38" fill="#fff3dc"/>
+        <ellipse cx="72" cy="222" rx="18" ry="8" fill="#fff3dc"/>
+        <ellipse cx="128" cy="222" rx="18" ry="8" fill="#fff3dc"/>
+        <g class="arm-down"><ellipse cx="56" cy="180" rx="10" ry="26" fill="#f0a24b"/><ellipse cx="144" cy="180" rx="10" ry="26" fill="#f0a24b"/></g>
+        <g class="head-grp">
+          <path d="M44 62 L52 18 L86 46 Z" fill="#f0a24b"/><path d="M56 52 L56 30 L74 46 Z" fill="#ffb6c8"/>
+          <path d="M156 62 L148 18 L114 46 Z" fill="#f0a24b"/><path d="M144 52 L144 30 L126 46 Z" fill="#ffb6c8"/>
+          <ellipse cx="100" cy="82" rx="58" ry="50" fill="#f0a24b"/>
+          <path d="M92 36 L92 52 M100 34 L100 52 M108 36 L108 52" stroke="#d9822b" stroke-width="4" stroke-linecap="round"/>
+          <g class="eye-happy"><circle cx="76" cy="82" r="9" fill="#2b1a1a"/><circle cx="124" cy="82" r="9" fill="#2b1a1a"/>
+            <circle cx="79" cy="79" r="3" fill="#fff"/><circle cx="127" cy="79" r="3" fill="#fff"/></g>
+          <g class="eye-sad"><ellipse cx="76" cy="84" rx="11" ry="12" fill="#2b1a1a"/><ellipse cx="124" cy="84" rx="11" ry="12" fill="#2b1a1a"/>
+            <circle cx="80" cy="79" r="5" fill="#fff"/><circle cx="128" cy="79" r="5" fill="#fff"/><circle cx="72" cy="88" r="2.5" fill="#fff"/><circle cx="120" cy="88" r="2.5" fill="#fff"/></g>
+          <g class="brow-sad"><path d="M60 66 L88 72" stroke="#8a4b12" stroke-width="4" stroke-linecap="round"/><path d="M140 66 L112 72" stroke="#8a4b12" stroke-width="4" stroke-linecap="round"/></g>
+          <path d="M96 96 L104 96 L100 101 Z" fill="#ff8aa6"/>
+          <path class="mouth-happy" d="M88 106 Q94 114 100 106 Q106 114 112 106" fill="none" stroke="#5a2a1a" stroke-width="3" stroke-linecap="round"/>
+          <path class="mouth-sad" d="M88 114 Q100 102 112 114" fill="none" stroke="#5a2a1a" stroke-width="3" stroke-linecap="round"/>
+          <g stroke="#fff3dc" stroke-width="2" stroke-linecap="round" opacity=".9">
+            <path d="M60 98 L26 92"/><path d="M60 104 L26 108"/><path d="M140 98 L174 92"/><path d="M140 104 L174 108"/></g>
+          <ellipse class="tear" cx="72" cy="100" rx="4" ry="6" fill="#8fd3ff"/>
+          <ellipse class="tear" cx="128" cy="100" rx="4" ry="6" fill="#8fd3ff" style="animation-delay:.6s"/>
+        </g>
+        <g class="paws">
+          <ellipse cx="86" cy="150" rx="14" ry="20" fill="#f0a24b" transform="rotate(20 86 150)"/>
+          <ellipse cx="114" cy="150" rx="14" ry="20" fill="#f0a24b" transform="rotate(-20 114 150)"/>
+          <circle cx="100" cy="132" r="9" fill="#fff3dc"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="bubble" id="bubble" aria-live="polite"></div>
+  <div class="sorry" id="sorry">সরি সেতু আপুউউউ 🥺</div>
+  <button type="button" class="btn" id="nextBtn">please click</button>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page" id="page2">
+  <div class="letter" id="letter">
+    <p class="to">প্রিয় সেতু,</p>
+    <p>আজ রাতে ঘুম হবে না, তাই ভাবলাম আমার সেতুর জন্য কিছু একটা বানানো যাক। জানো, আজ রাতটা অনেক লম্বা লাগছে, কেন যে এই রাতটা কাটছেই না। আর এখন সময়টাও খুব অদ্ভুত। ৩:০৩ বাজছে।</p>
+    <p>সেতু, স্বাস্থ্যের কী খবর এখন? চোখ ২টা ঠিক আছে?</p>
+    <p>জানো, আমি যখনই তোমার চোখের এই লাল হওয়া ছবিটা দেখি, না? আমার চোখ থেকে পানি পড়ে। তোমার চোখ ২টা কী সুন্দর, কেন এমন হলো তোমার? ঠিক হয়ে যাবে, আল্লাহ ভরসা। আর আগের থেকেও সুন্দর হয়ে যাবে।</p>
+    <p>চোখ ঠিক হওয়ার পরে আমাকে একটা চোখের ছবি দিবা কিন্তু।</p>
+    <p>আর রাতের ওই উল্টাপাল্টা ব্যবহারের জন্য সরি। আসলে শুধু একটু তোমার কাছ থেকে সময় চাচ্ছিলাম। জানো, তখন খুব একা লাগছিল। আমি মেসেঞ্জারে ঘুরছিলাম, কার সাথে কথা বলা যায়। একটা গ্রুপ আছে, ওখানে মেসেজও দিছিলাম, তোমাকে না পেয়ে তাও কারো সাথে কথা বলতে ইচ্ছা হচ্ছিল না। শুধু তোমার একটা মেসেজের অপেক্ষায় ছিলাম। তাই আর কি...</p>
+    <p>শোনো, নিজের যত্ন নিবা। তোমার জন্য আমার অনেক চিন্তা হয়। আল্লাহ তোমাকে নিজের রহমতের ছায়া দিয়ে ঢেকে রাখুন। আমিন।</p>
+    <p class="sign">ইতি,<br>একটা বিরক্তকর ছেলে 🌙</p>
+    <button type="button" class="btn" id="toPage3" style="margin:14px auto 0;display:block">please click🐱</button>
+  </div>
+</section>
+
+<!-- PAGE 3 -->
+<section class="page" id="page3">
+  <div id="stage3holder"></div>
+  <div class="bubble" id="bubble3" aria-live="polite"></div>
+</section>
+
+<script>
+(function(){
+  /* stars */
+  var sky=document.getElementById('sky');
+  for(var i=0;i<70;i++){
+    var s=document.createElement('div');s.className='star';
+    var z=Math.random()*2+1;
+    s.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*70+'%;width:'+z+'px;height:'+z+'px;animation-delay:'+Math.random()*3+'s;animation-duration:'+(2+Math.random()*3)+'s';
+    sky.appendChild(s);
+  }
+
+  /* flowers */
+  var garden=document.getElementById('garden');
+  var colors=['#ff7eb6','#ffb347','#c58cff','#ff6b6b','#ffe066','#7ec8ff','#ff9ecd'];
+  var pl=['প্লিজ','প্লিজ','প্লিজ 🥺','প্লিজ','প্লিজ প্লিজ'];
+  var n=Math.max(9,Math.floor(window.innerWidth/38));
+  for(var j=0;j<n;j++){
+    var f=document.createElement('div');f.className='flower';
+    var h=30+Math.random()*70;
+    var c=colors[Math.floor(Math.random()*colors.length)];
+    var petals='';
+    for(var p=0;p<7;p++){petals+='<i style="background:'+c+';transform:rotate('+Math.round(p*360/7)+'deg)"></i>';}
+    f.style.left=(j/n*96+Math.random()*3)+'%';
+    f.style.animationDelay=(Math.random()*4)+'s';
+    f.innerHTML='<div class="head">'+petals+'<b></b></div><div class="stem" style="height:'+h+'px"></div><span class="leaf" style="left:50%;bottom:'+Math.round(h*0.35)+'px"></span><span class="please" style="transition-delay:'+(j*0.12).toFixed(2)+'s">'+pl[j%pl.length]+'</span>';
+    garden.appendChild(f);
+  }
+
+  /* messages */
+  var m1='সরি সেতু আপু। মুশফিক ভাইয়ার উপর রাগ করে থেকো না, বা কোনো কারণে মুড অফ করেও থেকো না।';
+  var m2='সে মাঝে মাঝে একটু বেশি বলে ফেলে... তার হয়ে আমি সরি বলতেসি.... সরি সেতু আপুউউউ।';
+  var bubble=document.getElementById('bubble');
+  var catWrap=document.getElementById('catWrap');
+  var sorry=document.getElementById('sorry');
+  var btn=document.getElementById('nextBtn');
+
+  function chars(t){
+    try{
+      if(window.Intl&&Intl.Segmenter){
+        return Array.from(new Intl.Segmenter('bn',{granularity:'grapheme'}).segment(t),function(x){return x.segment;});
+      }
+    }catch(e){}
+    return Array.from(t);
+  }
+  function type(text,wait,done,el){
+    el=el||bubble;
+    var arr=chars(text),k=0;
+    el.textContent='';
+    el.style.opacity=1;
+    (function tick(){
+      if(k<arr.length){
+        k++;
+        el.textContent='\u201C'+arr.slice(0,k).join('');
+        setTimeout(tick,55);
+      }else{
+        el.textContent='\u201C'+text+'\u201D';
+        setTimeout(done,wait);
+      }
+    })();
+  }
+
+  setTimeout(function(){
+    type(m1,6000,function(){
+      bubble.style.opacity=0;
+      setTimeout(function(){
+        catWrap.classList.add('sad');          /* hat jor + sad face starts with 2nd message */
+        type(m2,3500,function(){
+          sorry.classList.add('show');
+          setTimeout(function(){btn.classList.add('show');},1200);
+        });
+      },800);
+    });
+  },900);
+
+  /* open letter */
+  btn.addEventListener('click',function(){
+    document.getElementById('page1').classList.remove('active');
+    document.getElementById('page2').classList.add('active');
+    window.scrollTo(0,0);
+    var ps=document.querySelectorAll('#letter p');
+    for(var q=0;q<ps.length;q++){
+      (function(el,d){setTimeout(function(){el.classList.add('in');},d);})(ps[q],600+q*1300);
+    }
+    setTimeout(function(){document.getElementById('toPage3').classList.add('show');},600+ps.length*1300+300);
+  });
+
+  /* ---------- page 3 ---------- */
+  var st3=document.querySelector('#page1 .stage').cloneNode(true);
+  st3.classList.add('small');
+  st3.innerHTML=st3.innerHTML.replace(/glow/g,'glow2');
+  var cat3=st3.querySelector('#catWrap');
+  cat3.removeAttribute('id');
+  document.getElementById('stage3holder').replaceWith(st3);
+  var b3=document.getElementById('bubble3');
+  var m3='দেখছো মুশফিক ভাইয়া তোমার জন্য কী সুন্দর চিঠি লিখেছে...';
+  var m4='সে কি বিরক্তিকর বলো? তার সাথে একটু সুন্দর করে কথা বলো না?';
+
+  document.getElementById('toPage3').addEventListener('click',function(){
+    document.getElementById('page2').classList.remove('active');
+    document.getElementById('page3').classList.add('active');
+    window.scrollTo(0,0);
+    setTimeout(function(){
+      type(m3,4500,function(){
+        b3.style.opacity=0;
+        setTimeout(function(){
+          cat3.classList.add('sad');
+          type(m4,1200,function(){document.body.classList.add('pleading');},b3);
+        },800);
+      },b3);
+    },900);
+  });
+})();
+</script>
+</body>
+</html>
